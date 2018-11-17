@@ -1,0 +1,14 @@
+version: '2'
+services:
+  fluentbit:
+    build:
+      context: .
+      args:
+        FLUENTBIT_VERSION: $FLUENTBIT_VERSION
+    restart: unless-stopped
+    ports:
+      - 2020:2020
+    volumes:
+      - ./config/fluent-bit-systemd.conf:/fluent-bit/etc/fluent-bit.conf
+      - /run/log/journal/:/var/log/journal/
+     

@@ -1,0 +1,16 @@
+version: '2'
+services:
+  filebeat:
+    build:
+      context: .
+      args:
+        FILEBEAT_VERSION: $FILEBEAT_VERSION
+    container_name: filebeat 
+    restart: unless-stopped
+    network_mode: "bridge"
+    extra_hosts:
+      - $ES_HOST
+    volumes:
+      - $FILEBEAT_YAML:/filebeat.yml
+      - $HOST_LOGS_DIR:/logs
+

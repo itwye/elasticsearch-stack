@@ -1,0 +1,23 @@
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /logs/*.log
+  json.keys_under_root: true
+  json.add_error_key: true
+  fields_under_root: true
+  fields:
+    host: 8.8.8.8
+    environment: mbc
+
+filebeat.registry_file: /logs/registry
+
+output.elasticsearch:
+  hosts:
+    - "elasticsearch:9200"
+  index: "nginx_frontend-%{+yyyy.MM.dd}"
+
+xpack.monitoring:
+  enabled: true
+
+setup.template.name: "filebeat-%{[beat.version]}"
+setup.template.pattern: "filebeat-%{[beat.version]}-*"
